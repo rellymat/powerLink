@@ -9,11 +9,11 @@ export const usePeopleFetch = () => {
     fetchUsers();
   }, []);
 
-  async function fetchUsers() {
+  async function fetchUsers(page=1) {
     setIsLoading(true);
-    const response = await axios.get(`https://randomuser.me/api/?results=25&page=1`);
+    const response = await axios.get(`https://randomuser.me/api/?results=25&page=${page}`);
     setIsLoading(false);
-    setUsers(response.data.results);
+    setUsers(prevUsers => [...prevUsers,...response.data.results]);
   }
 
   return { users, isLoading, fetchUsers };
